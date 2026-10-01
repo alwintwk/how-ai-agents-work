@@ -10,6 +10,7 @@
 * [How to read this repo](#how-to-read-this-repo)
 * [The layers](#the-layers)
 * [What an agent is made of](#what-an-agent-is-made-of)
+* [Apps: real agents taken apart](#apps-real-agents-taken-apart)
 * [Reading orders](#reading-orders)
 * [Learning resources](#learning-resources)
 * [Contributing](#contributing)
@@ -102,6 +103,21 @@ The short answer, expanded in [anatomy.md](anatomy.md):
 | Heartbeat | The repeat cycle that keeps it working until the job is done | agent loop | [10](layers/10-the-loop.md) |
 | Notebook | What it can see right now, and what it saved for later | context and memory | 11 |
 | Body | The ordinary program that holds all of this together | harness | 13 |
+
+<p align="right"><a href="#table-of-contents"><b>↥ Back to top</b></a></p>
+
+## Apps: real agents taken apart
+
+The same parts, inside real products. Each page uses one layout and maps the app back to the layers. Start at the [apps index](apps/README.md) for a side-by-side comparison.
+
+| App | What it is | Signature idea |
+|---|---|---|
+| [Claude Code](apps/claude-code.md) | Anthropic's coding agent | Add-ons that load only when needed |
+| [Codex CLI](apps/codex-cli.md) | OpenAI's open-source coding agent | Commands run in a locked-down box (sandbox) |
+| [opencode](apps/opencode.md) | Open-source coding agent for many models | The screen and the engine are separate programs |
+| [Aider](apps/aider.md) | Open-source coding chat | A fixed recipe where you pick the files |
+| [Hermes Agent](apps/hermes-agent.md) | Open-source personal agent | Writes its own how-to guides (skills) |
+| [OpenClaw](apps/openclaw.md) | Open-source personal assistant | Lives in your chat apps and can wake itself |
 
 <p align="right"><a href="#table-of-contents"><b>↥ Back to top</b></a></p>
 
