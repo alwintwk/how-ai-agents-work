@@ -37,6 +37,36 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). If 
 
 One Mermaid diagram (sequence or flowchart) tracing a single real request through the app, followed by a "> **Why this matters:**" line.
 
+## Component map
+
+One Mermaid diagram of the app's real building blocks, named the way the makers name them (module, folder or class names where the source is public). Label each block with the layer it belongs to, so the reader can see which layers combine into this app. Follow with a "> **Why this matters:**" line.
+
+## Deep dive, part by part
+
+One subsection per part, in this order. For each: how it actually works step by step, where it lives (link the real source file or docs page), the design choice the makers made, and what that choice costs.
+
+### How the instructions are put together (prompt assembly)
+### The tools and how a tool request is carried out (tool execution)
+### The loop and when it stops
+### Managing the reading space (context management)
+### Notes that outlive a session (memory)
+### The wrapper program (harness): processes, storage, screens
+
+## Problems it faces
+
+The issues this design runs into. Use real evidence: the makers' docs and write-ups, the source code, and the public issue tracker. No guessing.
+
+| Problem | Why it happens (which layer) | What this app does about it | What is still unsolved |
+|---|---|---|---|
+
+Then a short paragraph on each of the two or three most important problems.
+
+## If you were building your own
+
+**Worth copying:** three to five ideas, each with the reason.
+
+**Think twice:** two to four choices that have a real cost, each with the reason.
+
 ## What makes it different
 
 Two to four signature ideas. For each: what it is in plain English, the real term in brackets, and why the makers chose it.

@@ -4,6 +4,15 @@
 
 Every page follows one layout ([TEMPLATE.md](TEMPLATE.md)) and fills in the same seven slots from [What an agent is made of](../anatomy.md): brain, job description, reference books, hands, heartbeat, notebook, body. Once you have read one page, the others are quick to compare.
 
+Each page has four parts worth knowing about:
+
+- **Component map:** the app's real building blocks, each tagged with the layer it belongs to.
+- **Deep dive, part by part:** how the instructions are put together, how a tool request is carried out, when the loop stops, how the reading space is managed, how notes outlive a session, and how the wrapper program is laid out. Read from the source code where it is public.
+- **Problems it faces:** what goes wrong with this design, which layer causes it, what the app does about it, and what is still unsolved. Backed by docs, source and public bug reports.
+- **If you were building your own:** what to copy and what to think twice about.
+
+The problems that show up in all six are collected in [The problems every agent runs into](problems.md).
+
 *Last checked: October 2026. These apps change fast; each page links its sources.*
 
 ## The apps

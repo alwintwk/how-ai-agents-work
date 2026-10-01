@@ -108,7 +108,7 @@ The short answer, expanded in [anatomy.md](anatomy.md):
 
 ## Apps: real agents taken apart
 
-The same parts, inside real products. Each page uses one layout and maps the app back to the layers. Start at the [apps index](apps/README.md) for a side-by-side comparison.
+The same parts, inside real products. Each page uses one layout and maps the app back to the layers. Every page has a component map (which layers combine into the app), a part-by-part deep dive, the problems that design runs into, and what to copy if you build your own. Start at the [apps index](apps/README.md) for a side-by-side comparison, or go straight to [the problems every agent runs into](apps/problems.md).
 
 | App | What it is | Signature idea |
 |---|---|---|
