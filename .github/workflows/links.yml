@@ -1,0 +1,32 @@
+name: Check links
+
+on:
+  schedule:
+    - cron: "0 3 1 * *" # 03:00 UTC on the 1st of every month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # 403/429 = sites that block bots, not dead links
+          args: --accept 200,403,429 --max-retries 3 --timeout 30 --exclude unsplash.com --exclude fontsquirrel.com README.md
+          fail: false
+
+      - name: Open an issue if any link is broken
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Broken links found
+          content-filepath: ./lychee/out.md
+          labels: broken-links
