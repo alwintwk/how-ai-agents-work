@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "OpenClaw: One Message Through the Gateway",
+    "output": "diagrams/apps-openclaw-request.html",
+    "viewBox": [
+      1000,
+      570
+    ],
+    "column_fit": "spread",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "default": {
+          "label": "From your phone"
+        },
+        "emphasis": {
+          "label": "Work sent onward"
+        },
+        "return": {
+          "label": "Results back"
+        }
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "you",
+      "type": "external",
+      "label": "You",
+      "sublabel": "phone chat app"
+    },
+    {
+      "id": "gw",
+      "type": "backend",
+      "label": "Gateway",
+      "sublabel": "always-on program"
+    },
+    {
+      "id": "loop",
+      "type": "frontend",
+      "label": "Agent loop",
+      "sublabel": "builds the prompt"
+    },
+    {
+      "id": "m",
+      "type": "messagebus",
+      "label": "Model",
+      "sublabel": "LLM"
+    },
+    {
+      "id": "t",
+      "type": "database",
+      "label": "Tools",
+      "sublabel": "calendar, ..."
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "you",
+      "to": "gw",
+      "y": 160,
+      "label": "1. \"What is on my calendar tomorrow?\"",
+      "variant": "default"
+    },
+    {
+      "id": "m2",
+      "from": "gw",
+      "to": "loop",
+      "y": 194,
+      "label": "2. Approved sender? Queue it (else pairing code)",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m3",
+      "from": "loop",
+      "to": "m",
+      "y": 228,
+      "label": "3. Build reading space, send everything",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m4",
+      "from": "m",
+      "to": "loop",
+      "y": 262,
+      "label": "4. 'Run this tool'",
+      "variant": "return"
+    },
+    {
+      "id": "m5",
+      "from": "loop",
+      "to": "t",
+      "y": 296,
+      "label": "5. Check tool rules, run it",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m6",
+      "from": "t",
+      "to": "loop",
+      "y": 330,
+      "label": "6. Result",
+      "variant": "return"
+    },
+    {
+      "id": "m7",
+      "from": "loop",
+      "to": "m",
+      "y": 364,
+      "label": "7. Send everything again",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m8",
+      "from": "m",
+      "to": "loop",
+      "y": 398,
+      "label": "8. Plain answer",
+      "variant": "return"
+    },
+    {
+      "id": "m9",
+      "from": "loop",
+      "to": "gw",
+      "y": 432,
+      "label": "9. Save the turn",
+      "variant": "return"
+    },
+    {
+      "id": "m10",
+      "from": "gw",
+      "to": "you",
+      "y": 466,
+      "label": "10. Reply in the same chat",
+      "variant": "return"
+    }
+  ]
+}

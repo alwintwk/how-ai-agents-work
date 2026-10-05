@@ -36,23 +36,14 @@ Each tool is described with three things:
 
 ### Step 2: the round trip
 
-```mermaid
-sequenceDiagram
-  participant U as User
-  participant App as Your code
-  participant M as Model
-  participant W as Weather service
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/09-giving-it-hands-tool-call.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/09-giving-it-hands-tool-call.dark.png">
+    <img alt="Steps: 1 user asks, 2 your code sends message and tool menu, 3 model requests a tool, 4 your code decides and calls the service, 5 service replies, 6 result goes to the model, 7 model writes the answer, 8 user gets the final answer." src="../diagrams/09-giving-it-hands-tool-call.light.png">
+  </picture>
+</a>
 
-  U->>App: "What's the weather in Penang?"
-  App->>M: user message + tool menu
-  M-->>App: Tool request: get_weather, city = "Penang"
-  Note over App: Your code decides whether to run it
-  App->>W: real HTTP call
-  W-->>App: 31°C, thunderstorms
-  App->>M: Tool result: "31°C, thunderstorms"
-  M-->>App: "It's 31°C in Penang with thunderstorms. Bring an umbrella."
-  App-->>U: final answer
-```
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the model was called twice and never touched the weather service. It wrote a slip; your code did the work. That gap is where you put permission checks, limits, and logging.
 

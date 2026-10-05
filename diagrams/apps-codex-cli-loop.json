@@ -1,0 +1,238 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Codex CLI: One Turn, Step by Step",
+    "quality_profile": "showcase",
+    "output": "diagrams/apps-codex-cli-loop.html",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "The model"
+        },
+        "backend": {
+          "label": "Codex code"
+        },
+        "database": {
+          "label": "Conversation"
+        },
+        "messagebus": {
+          "label": "Command"
+        },
+        "security": {
+          "label": "Safety check"
+        },
+        "external": {
+          "label": "You / outcome"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "h",
+      "label": "Codex (harness)"
+    },
+    {
+      "id": "m",
+      "label": "Model and sandbox"
+    },
+    {
+      "id": "e",
+      "label": "Asks and endings"
+    }
+  ],
+  "mainPath": [
+    "goal",
+    "build",
+    "model",
+    "sb",
+    "run",
+    "record",
+    "full"
+  ],
+  "nodes": [
+    {
+      "id": "goal",
+      "lane": "h",
+      "col": 0,
+      "type": "external",
+      "label": "1. You give a task",
+      "sublabel": "\"fix the login test\"",
+      "width": 142,
+      "icon": "person"
+    },
+    {
+      "id": "build",
+      "lane": "h",
+      "col": 1,
+      "type": "backend",
+      "label": "2. Build and send",
+      "sublabel": "prompt, tools, AGENTS.md, task",
+      "width": 142
+    },
+    {
+      "id": "model",
+      "lane": "m",
+      "col": 2,
+      "type": "frontend",
+      "label": "3. Model answers",
+      "sublabel": "tool request or message?",
+      "width": 142
+    },
+    {
+      "id": "sb",
+      "lane": "m",
+      "col": 3,
+      "type": "security",
+      "label": "4. Sandbox allows?",
+      "sublabel": "inside the safe box?",
+      "width": 142
+    },
+    {
+      "id": "run",
+      "lane": "m",
+      "col": 4,
+      "type": "messagebus",
+      "label": "5. Run command",
+      "sublabel": "inside the sandbox",
+      "width": 142
+    },
+    {
+      "id": "record",
+      "lane": "h",
+      "col": 4,
+      "type": "database",
+      "label": "6. Add result",
+      "sublabel": "at the END of the chat",
+      "width": 142
+    },
+    {
+      "id": "full",
+      "lane": "h",
+      "col": 5,
+      "type": "backend",
+      "label": "7. Compact if big",
+      "sublabel": "over token limit: shrink",
+      "width": 142
+    },
+    {
+      "id": "ref",
+      "lane": "m",
+      "col": 5,
+      "type": "backend",
+      "label": "Tell model: refused",
+      "sublabel": "it was declined",
+      "width": 142
+    },
+    {
+      "id": "done",
+      "lane": "e",
+      "col": 2,
+      "type": "external",
+      "label": "Turn ends",
+      "sublabel": "show message to you",
+      "width": 142,
+      "icon": "success"
+    },
+    {
+      "id": "ask",
+      "lane": "e",
+      "col": 4,
+      "type": "security",
+      "label": "Approval policy",
+      "sublabel": "ask you for more access",
+      "width": 142
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "goal",
+      "to": "build",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e2",
+      "from": "build",
+      "to": "model",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e3",
+      "from": "model",
+      "to": "sb",
+      "variant": "emphasis",
+      "label": "tool request"
+    },
+    {
+      "id": "e4",
+      "from": "sb",
+      "to": "run",
+      "variant": "emphasis",
+      "label": "yes"
+    },
+    {
+      "id": "e5",
+      "from": "run",
+      "to": "record",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e6",
+      "from": "record",
+      "to": "full",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e7",
+      "from": "model",
+      "to": "done",
+      "variant": "default",
+      "label": "plain message",
+      "role": "branch"
+    },
+    {
+      "id": "e8",
+      "from": "sb",
+      "to": "ask",
+      "variant": "security",
+      "label": "needs more access",
+      "role": "branch"
+    },
+    {
+      "id": "e9",
+      "from": "ask",
+      "to": "run",
+      "variant": "default",
+      "label": "you approve",
+      "role": "branch"
+    },
+    {
+      "id": "e10",
+      "from": "ask",
+      "to": "ref",
+      "variant": "dashed",
+      "label": "you decline",
+      "role": "branch"
+    },
+    {
+      "id": "e12",
+      "from": "ref",
+      "to": "record",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e11",
+      "from": "full",
+      "to": "build",
+      "variant": "dashed",
+      "label": "next turn",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "top",
+      "route": "up-channel"
+    }
+  ]
+}

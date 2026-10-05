@@ -39,29 +39,14 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). Whe
 
 ## How one request flows
 
-```mermaid
-sequenceDiagram
-  participant You
-  participant TUI as Terminal screen (client)
-  participant Server as opencode server (harness)
-  participant Model as Model (LLM)
-  participant Tools as Tools
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/apps-opencode-request.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/apps-opencode-request.dark.png">
+    <img alt="Steps: 1 you ask, 2 screen sends it over HTTP, 3 server builds instructions and sends the session to the model, 4 model asks for a tool, 5 permission check and run, 6 output returns; repeat until 7 plain answer, 8 streamed back, 9 shown to you." src="../diagrams/apps-opencode-request.light.png">
+  </picture>
+</a>
 
-  You->>TUI: Why is the checkout test failing?
-  TUI->>Server: Send message over HTTP
-  Server->>Server: Build instructions:<br/>agent prompt + AGENTS.md + skill list
-  loop Until the model stops asking for tools
-    Server->>Model: Instructions + whole session so far
-    Model-->>Server: Please run 'bash' with 'npm test'
-    Server->>Server: Check permission rule:<br/>allow, ask or deny
-    Server->>Tools: Run the command
-    Tools-->>Server: Test output
-    Server->>Server: Reading space too full?<br/>If yes, summarise first
-  end
-  Model-->>Server: Plain answer, no tool request
-  Server-->>TUI: Stream the answer
-  TUI-->>You: Shows the answer
-```
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the screen is not the agent. The loop lives in the server, so any other screen (editor plug-in, web page, your own script) can drive the same agent by sending the same HTTP requests.
 

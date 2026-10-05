@@ -39,20 +39,14 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). Whe
 
 ## How one request flows
 
-```mermaid
-flowchart TD
-  You["You: add files, then type a request"] --> Build["Aider builds the message:<br/>instructions + repository map<br/>+ your files + chat so far"]
-  Build --> Model["Model replies with text<br/>containing search/replace blocks"]
-  Model --> Apply["Aider finds each 'search' text<br/>in the file and swaps in the 'replace' text"]
-  Apply --> Commit["Aider saves the change<br/>(git commit) with a message<br/>written by the weak model"]
-  Commit --> Lint{"Linter finds<br/>a problem?"}
-  Lint -- "no" --> Test{"Tests switched on<br/>and failing?"}
-  Lint -- "yes" --> Ask{"You agree<br/>to a fix attempt?"}
-  Test -- "yes" --> Ask
-  Test -- "no" --> Done["Back to you"]
-  Ask -- "yes, and retry limit not reached" --> Build
-  Ask -- "no" --> Done
-```
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/apps-aider-loop.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/apps-aider-loop.dark.png">
+    <img alt="Steps: 1 you ask, 2 Aider builds the message, 3 model replies with search/replace blocks, 4 Aider swaps in the edits, 5 git commit, 6 check for lint or test problems; if found and you agree, try again, otherwise back to you." src="../diagrams/apps-aider-loop.light.png">
+  </picture>
+</a>
+
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** every box except one is ordinary code with a fixed order. The model fills in only the "what should the edit be" box. That makes Aider easy to predict: you always know what happens after the model replies.
 

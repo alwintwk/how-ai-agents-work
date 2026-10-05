@@ -39,27 +39,14 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). Whe
 
 ## How one request flows
 
-```mermaid
-sequenceDiagram
-  participant You as You (phone chat app)
-  participant GW as Gateway (always-on program)
-  participant Loop as Agent loop
-  participant Model as Model
-  participant Tools as Tools
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/apps-openclaw-request.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/apps-openclaw-request.dark.png">
+    <img alt="Steps: 1 you message, 2 gateway checks the sender and queues it, 3 loop builds the reading space and sends it, 4 model asks for a tool, 5 tool rules then run, 6 result, 7 send again, 8 plain answer, 9 save the turn, 10 reply in the same chat." src="../diagrams/apps-openclaw-request.light.png">
+  </picture>
+</a>
 
-  You->>GW: 'What is on my calendar tomorrow?'
-  GW->>GW: Is this sender approved?<br/>If not, send a pairing code and stop
-  GW->>Loop: Put the message in this conversation's queue
-  Loop->>Loop: Build the reading space,<br/>workspace files + notes + chat so far
-  Loop->>Model: Send everything
-  Model-->>Loop: 'Run this tool'
-  Loop->>Tools: Check tool rules, then run it
-  Tools-->>Loop: Result
-  Loop->>Model: Send everything again
-  Model-->>Loop: Plain answer
-  Loop->>GW: Save the turn
-  GW->>You: Reply in the same chat
-```
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the sender check happens before the model sees a single word. An unapproved stranger's message never becomes a turn. That gate is ordinary code, not the model's judgement, which is why it can be trusted more than any instruction in the prompt.
 
