@@ -1,0 +1,214 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Claude Code: One Turn, Step by Step",
+    "quality_profile": "showcase",
+    "output": "diagrams/apps-claude-code-loop.html",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "The model"
+        },
+        "backend": {
+          "label": "Harness code"
+        },
+        "database": {
+          "label": "Reading space"
+        },
+        "messagebus": {
+          "label": "Tool"
+        },
+        "security": {
+          "label": "Safety check"
+        },
+        "external": {
+          "label": "You / outcome"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "h",
+      "label": "Harness (Claude Code)"
+    },
+    {
+      "id": "m",
+      "label": "Model and tools"
+    },
+    {
+      "id": "e",
+      "label": "Asks and endings"
+    }
+  ],
+  "mainPath": [
+    "goal",
+    "build",
+    "model",
+    "perm",
+    "run",
+    "record",
+    "full"
+  ],
+  "nodes": [
+    {
+      "id": "goal",
+      "lane": "h",
+      "col": 0,
+      "type": "external",
+      "label": "1. You give a task",
+      "sublabel": "\"fix the failing tests\"",
+      "width": 142,
+      "icon": "person"
+    },
+    {
+      "id": "build",
+      "lane": "h",
+      "col": 1,
+      "type": "backend",
+      "label": "2. Build the space",
+      "sublabel": "prompt, notes, skills",
+      "width": 142
+    },
+    {
+      "id": "model",
+      "lane": "m",
+      "col": 2,
+      "type": "frontend",
+      "label": "3. Model decides",
+      "sublabel": "tool request, or answer?",
+      "width": 142
+    },
+    {
+      "id": "perm",
+      "lane": "m",
+      "col": 3,
+      "type": "security",
+      "label": "4. Allowed?",
+      "sublabel": "mode + rules check",
+      "width": 142
+    },
+    {
+      "id": "run",
+      "lane": "m",
+      "col": 4,
+      "type": "messagebus",
+      "label": "5. Run the tool",
+      "sublabel": "edits saved first; sandbox",
+      "width": 142
+    },
+    {
+      "id": "record",
+      "lane": "h",
+      "col": 4,
+      "type": "database",
+      "label": "6. Add result",
+      "sublabel": "model sees it next turn",
+      "width": 142
+    },
+    {
+      "id": "full",
+      "lane": "h",
+      "col": 5,
+      "type": "backend",
+      "label": "7. Compact if full",
+      "sublabel": "if yes: summarise old turns",
+      "width": 142
+    },
+    {
+      "id": "done",
+      "lane": "e",
+      "col": 2,
+      "type": "external",
+      "label": "Show answer to you",
+      "sublabel": "model gave plain text",
+      "width": 142,
+      "icon": "success"
+    },
+    {
+      "id": "ask",
+      "lane": "e",
+      "col": 3,
+      "type": "security",
+      "label": "Ask for approval",
+      "sublabel": "or a safety classifier",
+      "width": 142
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "goal",
+      "to": "build",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e2",
+      "from": "build",
+      "to": "model",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e3",
+      "from": "model",
+      "to": "perm",
+      "variant": "emphasis",
+      "label": "tool request"
+    },
+    {
+      "id": "e4",
+      "from": "perm",
+      "to": "run",
+      "variant": "emphasis",
+      "label": "yes"
+    },
+    {
+      "id": "e5",
+      "from": "run",
+      "to": "record",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e6",
+      "from": "record",
+      "to": "full",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e7",
+      "from": "model",
+      "to": "done",
+      "variant": "default",
+      "label": "plain answer",
+      "role": "branch"
+    },
+    {
+      "id": "e8",
+      "from": "perm",
+      "to": "ask",
+      "variant": "security",
+      "label": "needs approval",
+      "role": "branch"
+    },
+    {
+      "id": "e9",
+      "from": "ask",
+      "to": "run",
+      "variant": "default",
+      "label": "approved",
+      "role": "branch"
+    },
+    {
+      "id": "e10",
+      "from": "full",
+      "to": "build",
+      "variant": "dashed",
+      "label": "next turn",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "top",
+      "route": "up-channel"
+    }
+  ]
+}

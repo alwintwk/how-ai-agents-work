@@ -1,0 +1,190 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Hermes Agent: One Message, Step by Step",
+    "quality_profile": "showcase",
+    "output": "diagrams/apps-hermes-agent-loop.html",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "The model"
+        },
+        "backend": {
+          "label": "Agent loop"
+        },
+        "security": {
+          "label": "Gate / safety check"
+        },
+        "messagebus": {
+          "label": "Terminal"
+        },
+        "database": {
+          "label": "Notes on disk"
+        },
+        "external": {
+          "label": "You / outcome"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "h",
+      "label": "Gateway and agent loop"
+    },
+    {
+      "id": "m",
+      "label": "Model and tools"
+    },
+    {
+      "id": "e",
+      "label": "Outcomes"
+    }
+  ],
+  "mainPath": [
+    "you",
+    "gw",
+    "loop",
+    "model",
+    "check",
+    "term"
+  ],
+  "nodes": [
+    {
+      "id": "you",
+      "lane": "h",
+      "col": 0,
+      "type": "external",
+      "label": "1. You message",
+      "sublabel": "Telegram: why did backup fail?",
+      "width": 142,
+      "icon": "person"
+    },
+    {
+      "id": "gw",
+      "lane": "h",
+      "col": 1,
+      "type": "security",
+      "label": "2. Gateway check",
+      "sublabel": "is this user allowed?",
+      "width": 142
+    },
+    {
+      "id": "loop",
+      "lane": "h",
+      "col": 2,
+      "type": "backend",
+      "label": "3. Loop loads session",
+      "sublabel": "plus saved notes, skill list",
+      "width": 142
+    },
+    {
+      "id": "model",
+      "lane": "m",
+      "col": 3,
+      "type": "frontend",
+      "label": "4. Model decides",
+      "sublabel": "tool, note, or answer?",
+      "width": 142
+    },
+    {
+      "id": "check",
+      "lane": "m",
+      "col": 4,
+      "type": "security",
+      "label": "5. Danger check",
+      "sublabel": "dangerous command gate",
+      "width": 142
+    },
+    {
+      "id": "term",
+      "lane": "h",
+      "col": 5,
+      "type": "messagebus",
+      "label": "6. Terminal runs",
+      "sublabel": "tail backup.log",
+      "width": 142
+    },
+    {
+      "id": "reply",
+      "lane": "e",
+      "col": 2,
+      "type": "external",
+      "label": "Gateway sends reply",
+      "sublabel": "answer back on Telegram",
+      "width": 142,
+      "icon": "success"
+    },
+    {
+      "id": "note",
+      "lane": "e",
+      "col": 4,
+      "type": "database",
+      "label": "MEMORY.md",
+      "sublabel": "note saved on disk",
+      "width": 142
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "you",
+      "to": "gw",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e2",
+      "from": "gw",
+      "to": "loop",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e3",
+      "from": "loop",
+      "to": "model",
+      "variant": "emphasis",
+      "label": "sends everything"
+    },
+    {
+      "id": "e4",
+      "from": "model",
+      "to": "check",
+      "variant": "emphasis",
+      "label": "tool request"
+    },
+    {
+      "id": "e5",
+      "from": "check",
+      "to": "term",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e6",
+      "from": "term",
+      "to": "loop",
+      "variant": "dashed",
+      "label": "output: disk full",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "top",
+      "route": "up-channel"
+    },
+    {
+      "id": "e7",
+      "from": "model",
+      "to": "reply",
+      "variant": "default",
+      "label": "plain answer",
+      "role": "branch"
+    },
+    {
+      "id": "e8",
+      "from": "model",
+      "to": "note",
+      "variant": "dashed",
+      "label": "save a note",
+      "role": "branch"
+    }
+  ]
+}

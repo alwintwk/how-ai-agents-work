@@ -43,18 +43,14 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). Whe
 
 You message the agent on Telegram: "Check why the backup script failed last night."
 
-```mermaid
-flowchart TD
-  U["You on Telegram:<br/>'why did the backup fail?'"] --> G["Gateway<br/>is this user allowed?"]
-  G --> L["Agent loop<br/>loads the saved session"]
-  S["Saved notes and skill list"] -- "pasted into the system prompt" --> L
-  L -- "sends everything so far" --> M["Model"]
-  M -- "asks for tool: terminal 'tail backup.log'" --> C["Dangerous-command check"]
-  C --> T["Terminal backend<br/>runs the command"]
-  T -- "output: disk full" --> L
-  M -- "asks to save a note" --> N["MEMORY.md on disk"]
-  M -- "plain answer, no tool request" --> R["Gateway sends the reply to Telegram"]
-```
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/apps-hermes-agent-loop.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/apps-hermes-agent-loop.dark.png">
+    <img alt="Steps: 1 you message on Telegram, 2 gateway checks you, 3 loop loads the session and notes, 4 model decides, 5 dangerous-command check, 6 terminal runs, output goes back to the loop. A plain answer is sent back; a note is saved to MEMORY.md." src="../diagrams/apps-hermes-agent-loop.light.png">
+  </picture>
+</a>
+
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the middle of this picture is the same loop as [Layer 10](../layers/10-the-loop.md). What Hermes adds is on the edges: a doorkeeper in front (the gateway) and a notebook behind (notes and skills) that outlives the conversation.
 

@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Looking Up Knowledge Before Answering",
+    "output": "diagrams/08-giving-it-knowledge-lookup.html",
+    "viewBox": [
+      900,
+      480
+    ],
+    "column_fit": "spread",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "default": {
+          "label": "You ask"
+        },
+        "emphasis": {
+          "label": "App asks"
+        },
+        "return": {
+          "label": "Comes back"
+        }
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "u",
+      "type": "external",
+      "label": "User",
+      "sublabel": "asks a question"
+    },
+    {
+      "id": "app",
+      "type": "backend",
+      "label": "App",
+      "sublabel": "your code"
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "Vector database",
+      "sublabel": "stored passages"
+    },
+    {
+      "id": "m",
+      "type": "frontend",
+      "label": "Model",
+      "sublabel": "writes the answer"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "u",
+      "to": "app",
+      "y": 160,
+      "label": "1. \"Can I return a bike after 40 days?\"",
+      "variant": "default"
+    },
+    {
+      "id": "m2",
+      "from": "app",
+      "to": "db",
+      "y": 194,
+      "label": "2. Question as numbers: find closest passages",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m3",
+      "from": "db",
+      "to": "app",
+      "y": 228,
+      "label": "3. Top 3 returns-policy passages",
+      "variant": "return"
+    },
+    {
+      "id": "m4",
+      "from": "app",
+      "to": "m",
+      "y": 262,
+      "label": "4. \"Answer using only these passages\" + question",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m5",
+      "from": "m",
+      "to": "app",
+      "y": 296,
+      "label": "5. \"No. 30 days max (section 2)\"",
+      "variant": "return"
+    },
+    {
+      "id": "m6",
+      "from": "app",
+      "to": "u",
+      "y": 330,
+      "label": "6. Answer with its source",
+      "variant": "return"
+    }
+  ]
+}

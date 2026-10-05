@@ -56,20 +56,14 @@ The model can only read a fixed amount of text per call: the **context window**.
 
 This is the single most important fact for understanding agents. The model has no memory of your last message (it is stateless). A chat app fakes memory by sending the **entire conversation again** every time you press enter.
 
-```mermaid
-sequenceDiagram
-  participant You
-  participant App as Chat app
-  participant M as Model
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/06-running-the-model-memory.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/06-running-the-model-memory.dark.png">
+    <img alt="Steps: 1 you say your name, 2 app sends message 1, 3 model replies, 4 you ask your name, 5 app re-sends the whole history, 6 model answers Sam." src="../diagrams/06-running-the-model-memory.light.png">
+  </picture>
+</a>
 
-  You->>App: "My name is Sam"
-  App->>M: [msg 1]
-  M-->>App: "Hi Sam"
-  You->>App: "What is my name?"
-  Note over App: App re-sends the whole history
-  App->>M: [msg 1, reply 1, msg 2]
-  M-->>App: "Sam"
-```
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** if the app sent only message 2, the model would have no idea who Sam is. Everything an agent "knows" during a job is there because some program put it in the reading space for this call.
 

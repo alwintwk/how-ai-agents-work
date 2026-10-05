@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "One Tool Call, Step by Step",
+    "output": "diagrams/09-giving-it-hands-tool-call.html",
+    "viewBox": [
+      940,
+      502
+    ],
+    "column_fit": "spread",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "default": {
+          "label": "You ask"
+        },
+        "emphasis": {
+          "label": "Code calls out"
+        },
+        "return": {
+          "label": "Reply"
+        }
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "u",
+      "type": "external",
+      "label": "User",
+      "sublabel": "asks a question"
+    },
+    {
+      "id": "app",
+      "type": "backend",
+      "label": "Your code",
+      "sublabel": "runs the tools"
+    },
+    {
+      "id": "m",
+      "type": "frontend",
+      "label": "Model",
+      "sublabel": "only writes text"
+    },
+    {
+      "id": "w",
+      "type": "cloud",
+      "label": "Weather service",
+      "sublabel": "real outside service"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "u",
+      "to": "app",
+      "y": 160,
+      "label": "1. \"Weather in Penang?\"",
+      "variant": "default"
+    },
+    {
+      "id": "m2",
+      "from": "app",
+      "to": "m",
+      "y": 194,
+      "label": "2. User message + tool menu",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m3",
+      "from": "m",
+      "to": "app",
+      "y": 228,
+      "label": "3. Tool request: get_weather(Penang)",
+      "variant": "return"
+    },
+    {
+      "id": "m4",
+      "from": "app",
+      "to": "w",
+      "y": 262,
+      "label": "4. Your code decides, then real HTTP call",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m5",
+      "from": "w",
+      "to": "app",
+      "y": 296,
+      "label": "5. 31C, thunderstorms",
+      "variant": "return"
+    },
+    {
+      "id": "m6",
+      "from": "app",
+      "to": "m",
+      "y": 330,
+      "label": "6. Tool result: 31C, thunderstorms",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m7",
+      "from": "m",
+      "to": "app",
+      "y": 364,
+      "label": "7. \"31C with thunderstorms. Bring an umbrella.\"",
+      "variant": "return"
+    },
+    {
+      "id": "m8",
+      "from": "app",
+      "to": "u",
+      "y": 398,
+      "label": "8. Final answer",
+      "variant": "return"
+    }
+  ]
+}

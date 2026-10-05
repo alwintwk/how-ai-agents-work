@@ -1,0 +1,204 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "The Parts of an Agent, Step by Step",
+    "quality_profile": "showcase",
+    "output": "diagrams/anatomy-agent-parts.html",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "The model"
+        },
+        "backend": {
+          "label": "Loop code"
+        },
+        "database": {
+          "label": "Reading space / stores"
+        },
+        "messagebus": {
+          "label": "Tool"
+        },
+        "security": {
+          "label": "Safety check"
+        },
+        "external": {
+          "label": "You / outcome"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "top",
+      "label": "You and extras"
+    },
+    {
+      "id": "mid",
+      "label": "Wrapper program (harness)"
+    },
+    {
+      "id": "bot",
+      "label": "Model and tools"
+    }
+  ],
+  "mainPath": [
+    "goal",
+    "loop",
+    "model",
+    "perm",
+    "tools",
+    "ctx"
+  ],
+  "nodes": [
+    {
+      "id": "goal",
+      "lane": "mid",
+      "col": 0,
+      "type": "external",
+      "label": "1. You give a goal",
+      "sublabel": "\"fix the failing test\"",
+      "width": 170,
+      "icon": "person"
+    },
+    {
+      "id": "loop",
+      "lane": "mid",
+      "col": 1,
+      "type": "backend",
+      "label": "2. Loop sends everything",
+      "sublabel": "whole reading space to model",
+      "width": 170
+    },
+    {
+      "id": "model",
+      "lane": "bot",
+      "col": 2,
+      "type": "frontend",
+      "label": "3. Model decides",
+      "sublabel": "tool request, or done?",
+      "width": 170
+    },
+    {
+      "id": "perm",
+      "lane": "mid",
+      "col": 3,
+      "type": "security",
+      "label": "4. Permission check",
+      "sublabel": "may it run this tool?",
+      "width": 170
+    },
+    {
+      "id": "tools",
+      "lane": "bot",
+      "col": 4,
+      "type": "messagebus",
+      "label": "5. Tool runs",
+      "sublabel": "read file, run command, search",
+      "width": 170
+    },
+    {
+      "id": "ctx",
+      "lane": "mid",
+      "col": 5,
+      "type": "database",
+      "label": "6. Result added to space",
+      "sublabel": "reading space (context window)",
+      "width": 190
+    },
+    {
+      "id": "answer",
+      "lane": "top",
+      "col": 2,
+      "type": "external",
+      "label": "Final answer to you",
+      "sublabel": "model said \"I am done\"",
+      "width": 170,
+      "icon": "success"
+    },
+    {
+      "id": "mem",
+      "lane": "top",
+      "col": 5,
+      "type": "database",
+      "label": "Saved notes",
+      "sublabel": "long-term memory, loaded at start",
+      "width": 170
+    },
+    {
+      "id": "know",
+      "lane": "top",
+      "col": 4,
+      "type": "database",
+      "label": "Knowledge",
+      "sublabel": "documents, looked up when needed",
+      "width": 170
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "goal",
+      "to": "loop",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e2",
+      "from": "loop",
+      "to": "model",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e3",
+      "from": "model",
+      "to": "perm",
+      "variant": "emphasis",
+      "label": "tool request"
+    },
+    {
+      "id": "e4",
+      "from": "perm",
+      "to": "tools",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e5",
+      "from": "tools",
+      "to": "ctx",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e6",
+      "from": "ctx",
+      "to": "loop",
+      "variant": "dashed",
+      "label": "go again",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "top",
+      "route": "up-channel"
+    },
+    {
+      "id": "e7",
+      "from": "model",
+      "to": "answer",
+      "variant": "default",
+      "label": "done",
+      "role": "branch"
+    },
+    {
+      "id": "e8",
+      "from": "mem",
+      "to": "ctx",
+      "variant": "dashed",
+      "role": "branch"
+    },
+    {
+      "id": "e9",
+      "from": "know",
+      "to": "ctx",
+      "variant": "dashed",
+      "role": "branch"
+    }
+  ]
+}

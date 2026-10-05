@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "The Model Forgets: The App Re-sends History",
+    "output": "diagrams/06-running-the-model-memory.html",
+    "viewBox": [
+      760,
+      480
+    ],
+    "column_fit": "spread",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "default": {
+          "label": "You type"
+        },
+        "emphasis": {
+          "label": "App sends history"
+        },
+        "return": {
+          "label": "Model replies"
+        }
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "you",
+      "type": "external",
+      "label": "You",
+      "sublabel": "the person"
+    },
+    {
+      "id": "app",
+      "type": "backend",
+      "label": "Chat app",
+      "sublabel": "keeps the history"
+    },
+    {
+      "id": "m",
+      "type": "frontend",
+      "label": "Model",
+      "sublabel": "remembers nothing"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "you",
+      "to": "app",
+      "y": 160,
+      "label": "1. \"My name is Sam\"",
+      "variant": "default"
+    },
+    {
+      "id": "m2",
+      "from": "app",
+      "to": "m",
+      "y": 194,
+      "label": "2. Send [msg 1]",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m3",
+      "from": "m",
+      "to": "app",
+      "y": 228,
+      "label": "3. \"Hi Sam\"",
+      "variant": "return"
+    },
+    {
+      "id": "m4",
+      "from": "you",
+      "to": "app",
+      "y": 262,
+      "label": "4. \"What is my name?\"",
+      "variant": "default"
+    },
+    {
+      "id": "m5",
+      "from": "app",
+      "to": "m",
+      "y": 296,
+      "label": "5. Re-send [msg 1, reply 1, msg 2]",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m6",
+      "from": "m",
+      "to": "app",
+      "y": 330,
+      "label": "6. \"Sam\"",
+      "variant": "return"
+    }
+  ]
+}

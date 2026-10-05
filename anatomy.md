@@ -10,24 +10,14 @@ Knowing the parts matters because when an agent does something stupid, the fix i
 
 ## The parts
 
-```mermaid
-flowchart TD
-  User["You: 'fix the failing test'"] --> Harness
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/anatomy-agent-parts.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="diagrams/anatomy-agent-parts.dark.png">
+    <img alt="Steps: 1 you give a goal, 2 the loop sends the whole reading space to the model, 3 the model decides, 4 a permission check on tool requests, 5 the tool runs, 6 the result is added to the reading space and the loop goes again. A plain answer goes back to you. Knowledge and saved notes feed the reading space." src="diagrams/anatomy-agent-parts.light.png">
+  </picture>
+</a>
 
-  subgraph Harness["Wrapper program (harness)"]
-    Loop["The loop<br/>think, act, look, repeat"]
-    Context["Reading space (context window)<br/>instructions + chat so far + tool results"]
-    Perm["Permission checks"]
-  end
-
-  Loop -- "sends everything in the reading space" --> Model["Model (LLM)<br/>guesses the next piece of text"]
-  Model -- "'please run this tool' or 'I am done'" --> Loop
-  Loop --> Perm --> Tools["Tools<br/>read file, run command, search"]
-  Tools -- "result" --> Context
-  Knowledge["Knowledge<br/>documents, search index"] -- "looked up when needed" --> Context
-  Memory["Saved notes<br/>(long-term memory)"] -- "loaded at start" --> Context
-  Loop -- "final answer" --> User
-```
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the model sits off to one side. It never touches your files, the internet, or anything else. It only receives text and returns text. Everything that actually happens in the world is done by the wrapper program.
 

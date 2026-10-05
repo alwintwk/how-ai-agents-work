@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "opencode: One Request Through the Server",
+    "output": "diagrams/apps-opencode-request.html",
+    "viewBox": [
+      1000,
+      536
+    ],
+    "column_fit": "spread",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "default": {
+          "label": "You ask"
+        },
+        "emphasis": {
+          "label": "Server calls out"
+        },
+        "return": {
+          "label": "Results back"
+        }
+      }
+    }
+  },
+  "participants": [
+    {
+      "id": "you",
+      "type": "external",
+      "label": "You",
+      "sublabel": "asks a question"
+    },
+    {
+      "id": "tui",
+      "type": "frontend",
+      "label": "Terminal screen",
+      "sublabel": "client"
+    },
+    {
+      "id": "srv",
+      "type": "backend",
+      "label": "opencode server",
+      "sublabel": "the harness"
+    },
+    {
+      "id": "m",
+      "type": "messagebus",
+      "label": "Model",
+      "sublabel": "LLM"
+    },
+    {
+      "id": "t",
+      "type": "database",
+      "label": "Tools",
+      "sublabel": "bash, read, ..."
+    }
+  ],
+  "messages": [
+    {
+      "id": "m1",
+      "from": "you",
+      "to": "tui",
+      "y": 160,
+      "label": "1. \"Why is checkout test failing?\"",
+      "variant": "default"
+    },
+    {
+      "id": "m2",
+      "from": "tui",
+      "to": "srv",
+      "y": 194,
+      "label": "2. Send message over HTTP",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m3",
+      "from": "srv",
+      "to": "m",
+      "y": 228,
+      "label": "3. Build instructions, send them + whole session",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m4",
+      "from": "m",
+      "to": "srv",
+      "y": 262,
+      "label": "4. Run 'bash' with 'npm test'",
+      "variant": "return"
+    },
+    {
+      "id": "m5",
+      "from": "srv",
+      "to": "t",
+      "y": 296,
+      "label": "5. Check permission rule, run command",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m6",
+      "from": "t",
+      "to": "srv",
+      "y": 330,
+      "label": "6. Test output (summarise first if too full)",
+      "variant": "return"
+    },
+    {
+      "id": "m7",
+      "from": "m",
+      "to": "srv",
+      "y": 364,
+      "label": "7. Plain answer, no tool request",
+      "variant": "return"
+    },
+    {
+      "id": "m8",
+      "from": "srv",
+      "to": "tui",
+      "y": 398,
+      "label": "8. Stream the answer",
+      "variant": "return"
+    },
+    {
+      "id": "m9",
+      "from": "tui",
+      "to": "you",
+      "y": 432,
+      "label": "9. Shows the answer",
+      "variant": "return"
+    }
+  ],
+  "segments": [
+    {
+      "from": 214,
+      "to": 344,
+      "label": "Repeat until no tool request"
+    }
+  ]
+}

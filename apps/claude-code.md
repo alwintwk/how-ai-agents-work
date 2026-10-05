@@ -39,24 +39,14 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). If 
 
 ## How one request flows
 
-```mermaid
-flowchart TD
-  U["You: 'fix the failing tests'"] --> H["Claude Code (harness)<br/>builds the reading space"]
-  S["Loaded at start:<br/>system prompt, CLAUDE.md, auto memory index,<br/>skill descriptions, MCP tool names"] --> H
-  H --> M["Claude model<br/>reads everything, picks the next step"]
-  M --> D{"Did the model<br/>ask for a tool?"}
-  D -- "no, plain answer" --> Done["Show the answer to you"]
-  D -- "yes" --> P{"Allowed by the<br/>permission mode and rules?"}
-  P -- "needs approval" --> Ask["Ask you, or ask the<br/>safety classifier in auto mode"]
-  Ask -- "denied" --> R
-  Ask -- "approved" --> T
-  P -- "yes" --> T["Run the tool<br/>(file edits are snapshotted first,<br/>shell commands can run in a sandbox)"]
-  T --> R["Add the result to the reading space"]
-  R --> C{"Reading space<br/>nearly full?"}
-  C -- "no" --> M
-  C -- "yes" --> K["Compaction: clear old tool results,<br/>then summarise the conversation"]
-  K --> M
-```
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/apps-claude-code-loop.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/apps-claude-code-loop.dark.png">
+    <img alt="Steps: 1 you give a task, 2 harness builds the reading space, 3 model decides, 4 permission check (ask you if needed), 5 run the tool, 6 add the result, 7 compact if the space is nearly full, then next turn. A plain answer is shown to you." src="../diagrams/apps-claude-code-loop.light.png">
+  </picture>
+</a>
+
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the model only ever asks. Every edit and command passes through a permission check that lives in ordinary program code, so the safety of the agent depends on the harness and your settings, not on the model behaving well.
 

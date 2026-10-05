@@ -31,21 +31,14 @@ flowchart LR
 
 ### Phase 2: answer a question (every time)
 
-```mermaid
-sequenceDiagram
-  participant U as User
-  participant App
-  participant DB as Vector database
-  participant M as Model
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/08-giving-it-knowledge-lookup.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/08-giving-it-knowledge-lookup.dark.png">
+    <img alt="Steps: 1 user asks, 2 app turns the question into numbers and searches, 3 database returns top passages, 4 app sends passages and question to the model, 5 model answers, 6 app returns the answer with its source." src="../diagrams/08-giving-it-knowledge-lookup.light.png">
+  </picture>
+</a>
 
-  U->>App: "Can I return a bike after 40 days?"
-  App->>App: Turn the question into numbers
-  App->>DB: Find the passages with the closest numbers
-  DB-->>App: Top 3 passages from the returns policy
-  App->>M: "Answer using only these passages: [...]<br/>Question: Can I return a bike after 40 days?"
-  M-->>App: "No. Returns are accepted within 30 days (Returns policy, section 2)."
-  App-->>U: Answer with its source
-```
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** the model did not learn anything. The app did a search and pasted the result into the prompt. All the "knowledge" lives in the search step, which is ordinary software you can inspect and fix.
 

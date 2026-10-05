@@ -41,23 +41,14 @@ How this app fills each slot from [What an agent is made of](../anatomy.md). Whe
 
 ## How one request flows
 
-```mermaid
-flowchart TD
-  U["You: 'fix the failing login test'"] --> B["Codex builds the prompt:<br/>base instructions + tool list +<br/>sandbox note + AGENTS.md + your message"]
-  B --> M["Send everything to the model<br/>(Responses API)"]
-  M --> D{"What came back?"}
-  D -- "a tool request,<br/>e.g. run 'npm test'" --> S{"Allowed inside<br/>the sandbox?"}
-  S -- "yes" --> R["Run the command<br/>inside the sandbox"]
-  S -- "no, it needs more access" --> A{"Approval policy:<br/>ask you?"}
-  A -- "you approve" --> R
-  A -- "you decline" --> N["Tell the model<br/>it was refused"]
-  R --> E["Add the result to the END<br/>of the conversation"]
-  N --> E
-  E --> C{"Conversation over<br/>the token limit?"}
-  C -- "no" --> M
-  C -- "yes" --> K["Shrink the conversation<br/>(compaction)"] --> M
-  D -- "a plain message" --> F["Turn ends:<br/>show the message to you"]
-```
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/apps-codex-cli-loop.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/apps-codex-cli-loop.dark.png">
+    <img alt="Steps: 1 you give a task, 2 Codex builds and sends the prompt, 3 model answers, 4 sandbox check, 5 run the command, 6 add the result to the end of the chat, 7 compact if big. Needs more access: ask you. Plain message ends the turn." src="../diagrams/apps-codex-cli-loop.light.png">
+  </picture>
+</a>
+
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** two separate checks sit between the model and your computer. The sandbox is a hard wall enforced by the operating system. The approval policy only decides when to stop and ask you before going past that wall.
 

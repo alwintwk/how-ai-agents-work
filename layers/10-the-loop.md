@@ -14,17 +14,14 @@ This is the exact point where a chatbot becomes an agent.
 
 ## How it works
 
-```mermaid
-flowchart TD
-  Start["Goal from the user"] --> Ask["Send everything so far to the model"]
-  Ask --> Dec{"Did the model ask<br/>for a tool?"}
-  Dec -- "yes" --> Run["Run the tool"]
-  Run --> Add["Add the result to the record"]
-  Add --> Limit{"Step limit<br/>reached?"}
-  Limit -- "no" --> Ask
-  Limit -- "yes" --> Stop["Stop and report"]
-  Dec -- "no, it wrote a plain answer" --> Done["Done: show the answer"]
-```
+<a href="https://alwintwk.github.io/how-ai-agents-work/diagrams/10-the-loop.html">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../diagrams/10-the-loop.dark.png">
+    <img alt="The agent loop in 6 steps: 1. you give a goal, 2. the loop sends everything so far to the model, 3. the model decides to call a tool or answer, 4. the tool runs, 5. the result is added to the record, 6. if the step limit is not hit, go back to step 2. A plain answer ends the loop; hitting the step limit stops and reports." src="../diagrams/10-the-loop.light.png">
+  </picture>
+</a>
+
+<sub>Click the diagram for the interactive version (zoom, dark mode, trace a path).</sub>
 
 > **Why this matters:** there is no hidden intelligence in the loop itself. It is a `while` loop a beginner could write. All the decision-making happens in the model's reply; all the doing happens in the tools.
 

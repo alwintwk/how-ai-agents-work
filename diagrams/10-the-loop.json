@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "The Agent Loop, Step by Step",
+    "quality_profile": "showcase",
+    "output": "diagrams/10-the-loop.html",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "The model"
+        },
+        "backend": {
+          "label": "Loop code"
+        },
+        "database": {
+          "label": "Running record"
+        },
+        "messagebus": {
+          "label": "Tool"
+        },
+        "security": {
+          "label": "Safety check"
+        },
+        "external": {
+          "label": "You / outcome"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "loop",
+      "label": "Agent loop (plain code)"
+    },
+    {
+      "id": "work",
+      "label": "Model + tools"
+    },
+    {
+      "id": "end",
+      "label": "How it ends"
+    }
+  ],
+  "phases": [
+    {
+      "id": "repeat",
+      "label": "Repeat until done",
+      "fromCol": 1,
+      "toCol": 5,
+      "variant": "emphasis"
+    }
+  ],
+  "mainPath": [
+    "goal",
+    "send",
+    "decide",
+    "run",
+    "record",
+    "limit"
+  ],
+  "nodes": [
+    {
+      "id": "goal",
+      "lane": "loop",
+      "col": 0,
+      "type": "external",
+      "icon": "person",
+      "label": "1. Give a goal",
+      "sublabel": "\"fix the failing test\"",
+      "width": 170
+    },
+    {
+      "id": "send",
+      "lane": "loop",
+      "col": 1,
+      "type": "backend",
+      "label": "2. Send everything",
+      "sublabel": "goal + all results so far",
+      "width": 170
+    },
+    {
+      "id": "decide",
+      "lane": "work",
+      "col": 2,
+      "type": "frontend",
+      "label": "3. Model decides",
+      "sublabel": "call a tool, or answer?",
+      "width": 170
+    },
+    {
+      "id": "run",
+      "lane": "work",
+      "col": 3,
+      "type": "messagebus",
+      "label": "4. Run the tool",
+      "sublabel": "read file, run test, ...",
+      "width": 170
+    },
+    {
+      "id": "record",
+      "lane": "loop",
+      "col": 4,
+      "type": "database",
+      "label": "5. Add result to record",
+      "sublabel": "the model sees it next turn",
+      "width": 170
+    },
+    {
+      "id": "limit",
+      "lane": "loop",
+      "col": 5,
+      "type": "security",
+      "label": "6. Step limit hit?",
+      "sublabel": "safety stop",
+      "width": 170
+    },
+    {
+      "id": "stop",
+      "lane": "end",
+      "col": 5,
+      "type": "security",
+      "icon": "failure",
+      "label": "Stop and report",
+      "sublabel": "too many steps",
+      "width": 170
+    },
+    {
+      "id": "done",
+      "lane": "end",
+      "col": 2,
+      "type": "external",
+      "icon": "success",
+      "label": "Done: show answer",
+      "sublabel": "model wrote plain text",
+      "width": 170
+    }
+  ],
+  "edges": [
+    {
+      "id": "goal-send",
+      "from": "goal",
+      "to": "send",
+      "variant": "emphasis"
+    },
+    {
+      "id": "send-decide",
+      "from": "send",
+      "to": "decide",
+      "variant": "emphasis"
+    },
+    {
+      "id": "decide-run",
+      "from": "decide",
+      "to": "run",
+      "label": "tool call",
+      "variant": "emphasis"
+    },
+    {
+      "id": "decide-done",
+      "from": "decide",
+      "to": "done",
+      "label": "plain answer",
+      "role": "branch"
+    },
+    {
+      "id": "run-record",
+      "from": "run",
+      "to": "record",
+      "variant": "emphasis"
+    },
+    {
+      "id": "record-limit",
+      "from": "record",
+      "to": "limit",
+      "variant": "emphasis"
+    },
+    {
+      "id": "limit-send",
+      "from": "limit",
+      "to": "send",
+      "label": "no: go again",
+      "variant": "dashed",
+      "role": "return",
+      "fromSide": "top",
+      "toSide": "top",
+      "route": "up-channel"
+    },
+    {
+      "id": "limit-stop",
+      "from": "limit",
+      "to": "stop",
+      "label": "yes",
+      "variant": "security",
+      "role": "error"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "The loop is dumb",
+      "items": [
+        "It is a plain while-loop",
+        "All choices come from the model's reply"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Why a step limit",
+      "items": [
+        "Stops a model that never finishes",
+        "Caps cost and runaway tool use"
+      ]
+    }
+  ]
+}

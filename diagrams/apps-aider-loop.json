@@ -1,0 +1,186 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Aider: One Request, Step by Step",
+    "quality_profile": "showcase",
+    "output": "diagrams/apps-aider-loop.html",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "The model"
+        },
+        "backend": {
+          "label": "Aider code"
+        },
+        "database": {
+          "label": "Saved change"
+        },
+        "security": {
+          "label": "Check / question"
+        },
+        "external": {
+          "label": "You / outcome"
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "h",
+      "label": "Aider (fixed recipe)"
+    },
+    {
+      "id": "m",
+      "label": "Model and endings"
+    }
+  ],
+  "mainPath": [
+    "goal",
+    "build",
+    "model",
+    "apply",
+    "commit",
+    "check"
+  ],
+  "nodes": [
+    {
+      "id": "goal",
+      "lane": "h",
+      "col": 0,
+      "type": "external",
+      "label": "1. You ask",
+      "sublabel": "add files, type request",
+      "width": 142,
+      "icon": "person"
+    },
+    {
+      "id": "build",
+      "lane": "h",
+      "col": 1,
+      "type": "backend",
+      "label": "2. Build message",
+      "sublabel": "rules, repo map, files, chat",
+      "width": 142
+    },
+    {
+      "id": "model",
+      "lane": "m",
+      "col": 2,
+      "type": "frontend",
+      "label": "3. Model replies",
+      "sublabel": "search/replace blocks",
+      "width": 142
+    },
+    {
+      "id": "apply",
+      "lane": "h",
+      "col": 3,
+      "type": "backend",
+      "label": "4. Swap in edits",
+      "sublabel": "find 'search' text, put 'replace'",
+      "width": 142
+    },
+    {
+      "id": "commit",
+      "lane": "h",
+      "col": 4,
+      "type": "database",
+      "label": "5. Git commit",
+      "sublabel": "message by the weak model",
+      "width": 142
+    },
+    {
+      "id": "check",
+      "lane": "h",
+      "col": 5,
+      "type": "security",
+      "label": "6. Any problem?",
+      "sublabel": "lint errors or failing tests",
+      "width": 142
+    },
+    {
+      "id": "done",
+      "lane": "m",
+      "col": 4,
+      "type": "external",
+      "label": "Back to you",
+      "sublabel": "nothing left to fix",
+      "width": 142,
+      "icon": "success"
+    },
+    {
+      "id": "ask",
+      "lane": "m",
+      "col": 5,
+      "type": "security",
+      "label": "Fix it? (ask you)",
+      "sublabel": "retry limit not reached",
+      "width": 142
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "goal",
+      "to": "build",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e2",
+      "from": "build",
+      "to": "model",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e3",
+      "from": "model",
+      "to": "apply",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e4",
+      "from": "apply",
+      "to": "commit",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e5",
+      "from": "commit",
+      "to": "check",
+      "variant": "emphasis"
+    },
+    {
+      "id": "e6",
+      "from": "check",
+      "to": "ask",
+      "variant": "security",
+      "label": "yes",
+      "role": "branch"
+    },
+    {
+      "id": "e7",
+      "from": "check",
+      "to": "done",
+      "variant": "default",
+      "label": "no",
+      "role": "branch"
+    },
+    {
+      "id": "e8",
+      "from": "ask",
+      "to": "done",
+      "variant": "default",
+      "label": "no",
+      "role": "branch"
+    },
+    {
+      "id": "e9",
+      "from": "ask",
+      "to": "build",
+      "variant": "dashed",
+      "label": "yes: try again",
+      "role": "return"
+    }
+  ]
+}
